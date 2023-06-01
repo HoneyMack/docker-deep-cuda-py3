@@ -10,6 +10,11 @@ service dbus start
 # Start the avahi daemon (for resolving DNS name)
 service avahi-daemon start
 
+# dockerを実行する人のユーザー名のディレクトリを作成して、その中に.bashrcをコピーすることで、bashの設定を反映
+mkdir -p $HOME
+cp /home/.bashrc $HOME/.bashrc
+
+
 ################################################################################
 
 # Keep the Docker container running in the background.

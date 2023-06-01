@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.5.1-devel-ubuntu20.04
+FROM nvidia/cuda:11.7.1-devel-ubuntu20.04
 SHELL ["/bin/bash", "-c"]
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -10,6 +10,7 @@ RUN apt-get update && \
         git \
         vim \
         python3-pip \
+        python3.8-venv \
         lsb-release \
         gnupg \
         avahi-autoipd \
@@ -25,19 +26,22 @@ RUN apt-get update && \
 
 RUN source /root/.bashrc && \
     pip install matplotlib && \
-    pip install torch==1.11.0+cu115 torchvision==0.12.0+cu115 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu115
+    pip install torch torchvision torchaudio
 
 # Copy the helper scripts to the working directory.
 COPY ./docker/scripts/. /root/scripts/
 RUN chmod -R +x /root/scripts/*
+
+# container内のユーザを外部と揃えるための処理
+COPY ./docker/scripts/.bashrc /home/
+RUN chown 1000:1000 /home/.bashrc
+RUN chown -R 1000:1000 /home
 
 # # Force color prompt in terminal.
 RUN sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/' /root/.bashrc
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-WORKDIR /root
 
 ENTRYPOINT []
 
