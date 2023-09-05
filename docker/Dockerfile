@@ -1,4 +1,5 @@
-FROM nvidia/cuda:11.5.1-devel-ubuntu20.04
+FROM nvidia/cudagl:11.3.0-devel-ubuntu20.04
+
 SHELL ["/bin/bash", "-c"]
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -27,7 +28,7 @@ RUN apt-get update && \
 
 RUN source /root/.bashrc && \
     pip install matplotlib && \
-    pip install torch==1.11.0+cu115 torchvision==0.12.0+cu115 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu115
+    pip install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio==0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 
 # Copy the helper scripts to the working directory.
 COPY ./docker/scripts/. /root/scripts/
