@@ -24,10 +24,6 @@ RUN apt-get update && \
         libglew2.1
 
 
-# RUN source /root/.bashrc && \
-#     pip install matplotlib && \
-#     pip install torch torchvision torchaudio
-
 # Copy the helper scripts to the working directory.
 COPY ./docker/scripts/. /root/scripts/
 RUN chmod -R +x /root/scripts/*
