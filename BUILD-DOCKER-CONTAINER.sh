@@ -10,6 +10,8 @@ if [ -z $DEEP_PROJECT_NAME ]; then
 fi
 PROJECT=$DEEP_PROJECT_NAME
 CONTAINER="${PROJECT}_deep_1"
+export HOSTNAME=$(hostname)
+export CONTAINER=$CONTAINER # Export the container name for docker compose to coherently set container name.
 echo "$0: PROJECT=${PROJECT}"
 echo "$0: CONTAINER=${CONTAINER}"
 
