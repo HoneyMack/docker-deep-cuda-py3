@@ -23,6 +23,10 @@ RUN apt-get update && \
         libglfw3 \
         libglew2.1
 
+# install poetry
+RUN pip3 install --upgrade certifi && \
+    curl -sSL https://install.python-poetry.org | python3 - && \
+    echo 'export PATH="/root/.local/bin:$PATH"' >> /root/.bashrc
 
 # Copy the helper scripts to the working directory.
 COPY ./docker/scripts/. /root/scripts/
