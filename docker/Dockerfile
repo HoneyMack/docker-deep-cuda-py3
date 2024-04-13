@@ -9,6 +9,7 @@ RUN apt-get update && \
         curl \
         git \
         vim \
+        cmake \
         python3-pip \
         python3.8-venv \
         lsb-release \
