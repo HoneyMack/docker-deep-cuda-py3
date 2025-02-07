@@ -4,17 +4,23 @@
 
 # Set the Docker container name from a project name (first argument).
 # If no argument is given, use the current user name as the project name.
-if [ -z $DEEP_PROJECT_NAME ]; then
-  PROJECT=$DEEP_PROJECT_NAME
+if [ -z "$DEEP_PROJECT_NAME" ]; then
   echo "Set DEEP_PROJECT_NAME (e.g. 'export DEEP_PROJECT_NAME=mytest')"
   exit 1
 fi
 PROJECT=$DEEP_PROJECT_NAME
 CONTAINER="${PROJECT}_deep_1"
 export HOSTNAME=$(hostname)
-export CONTAINER=$CONTAINER # Export the container name for docker compose to coherently set container name.
+export CONTAINER=$CONTAINER  # Export the container name for docker compose to coherently set container name.
+
+# タグが指定されていない場合は "latest" をデフォルトとする（ビルド済みのイメージと合わせる）
+if [ -z "$DEEP_IMAGE_TAG" ]; then
+  export DEEP_IMAGE_TAG=latest
+fi
+
 echo "$0: PROJECT=${PROJECT}"
 echo "$0: CONTAINER=${CONTAINER}"
+echo "$0: Using image tag: ${DEEP_IMAGE_TAG}"
 
 # Run the Docker container in the background.
 # Any changes made to './docker/docker-compose.yml' will recreate and overwrite the container.
@@ -26,9 +32,9 @@ xhost +
 # Enter the Docker container with a Bash shell (with or without a custom 'roslaunch' command).
 case "$2" in
   ( "" )
-  docker exec -i -t ${CONTAINER} bash
-  ;;
+    docker exec -i -t ${CONTAINER} bash
+    ;;
   ( * )
-  echo "Failed to enter the Docker container '${CONTAINER}': '$2' is not a valid argument value."
-  ;;
+    echo "Failed to enter the Docker container '${CONTAINER}': '$2' is not a valid argument value."
+    ;;
 esac
