@@ -1,4 +1,4 @@
-# docker-ros-cuda-py3
+# docker-deep-cuda-py3
 Ubuntu 22.04 + cuda12.2
 
 ## build docker image
