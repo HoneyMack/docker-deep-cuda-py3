@@ -17,7 +17,7 @@ RUN apt update && apt install -y --no-install-recommends \
     tcpdump sysstat screen tmux \
     libglib2.0-0 libgl1-mesa-glx libegl1-mesa \
     speech-dispatcher portaudio19-dev libgeos-dev \
-    python${PYTHON_VERSION} python${PYTHON_VERSION}-venv \
+    python${PYTHON_VERSION} python${PYTHON_VERSION}-venv python3-pip\
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # RUN apt update && \
