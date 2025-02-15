@@ -1,5 +1,5 @@
 # docker-deep-cuda-py3
-Ubuntu 22.04 + cuda12.2
+docker container prefab which consists of Ubuntu 22.04 + cuda12.2
 
 ## build docker image
 
