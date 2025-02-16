@@ -15,23 +15,10 @@ RUN apt update && apt install -y --no-install-recommends \
     htop atop nvtop \
     sed gawk grep curl wget zip unzip \
     tcpdump sysstat screen tmux \
-    libglib2.0-0 libgl1-mesa-glx libegl1-mesa \
+    libusb-1.0-0-dev libglib2.0-0 libgl1-mesa-glx libegl1-mesa \
     speech-dispatcher portaudio19-dev libgeos-dev \
     python${PYTHON_VERSION} python${PYTHON_VERSION}-venv python3-pip\
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# RUN apt update && \
-#     apt install -y  --no-install-recommends \
-#     lsb-release \
-#     gnupg \
-#     avahi-autoipd \
-#     avahi-daemon \
-#     avahi-utils \
-#     libgl1-mesa-dev \
-#     libxrandr2 \
-#     libxcursor1 \
-#     libglfw3 \
-#     libglew2.1
 
 
 # Install ffmpeg build dependencies
@@ -79,6 +66,13 @@ ENV PATH="/root/.local/bin:$PATH"
 RUN echo 'if [ "$HOME" != "/root" ]; then ln -sf /root/.local/bin/poetry $HOME/.local/bin/poetry; fi' >> /root/.bashrc
 RUN poetry config virtualenvs.create false
 RUN poetry config virtualenvs.in-project true
+
+# Install uv
+RUN wget -qO- https://astral.sh/uv/install.sh | sh
+
+# Install qt
+RUN apt update && apt install -y --no-install-recommends \
+ 	qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
 
 # Set EGL as the rendering backend for MuJoCo
 ENV MUJOCO_GL="egl"
